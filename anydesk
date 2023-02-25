@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+	printf "\nPlease, run this script as root\n\n"
+	exit
+fi
+
+wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
+apt-get update --list-cleanup
+apt-get install --install-recommends --install-suggests --assume-yes --fix-missing --fix-broken anydesk
